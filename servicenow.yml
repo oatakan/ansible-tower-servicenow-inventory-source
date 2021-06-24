@@ -2,10 +2,26 @@
 plugin: servicenow.servicenow.now
 fields:
   - name
+  - host_name
+  - fqdn
+  - ip_address
+  - sys_class_name
+  - install_status
+  - classification
+  - vendor
   - sys_tags
 compose:
   sn_tags: sn_sys_tags.replace(" ", "").split(',')
   ansible_host: sn_ip_address
 keyed_groups:
-  - key: sn_tags | lower
-    prefix: 'tag'
+  - key: sn_classification | lower
+    prefix: 'env'
+  - key: sn_vendor | lower
+    prefix: ''
+    separator: ''
+  - key: sn_sys_class_name | lower
+    prefix: ''
+    separator: ''
+  - key: sn_install_status | lower
+    prefix: 'status'
+filter_results: ip_addressISNOTEMPTY
