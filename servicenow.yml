@@ -1,0 +1,11 @@
+---
+plugin: servicenow.servicenow.now
+fields:
+  - name
+  - sys_tags
+compose:
+  sn_tags: sn_sys_tags.replace(" ", "").split(',')
+  ansible_host: sn_ip_address
+keyed_groups:
+  - key: sn_tags | lower
+    prefix: 'tag'
